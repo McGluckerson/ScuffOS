@@ -1,5 +1,7 @@
 from random import randint
 
+
+#yes
 # imports programs
 import battleship
 import casino
@@ -11,7 +13,7 @@ def os_commands(user):
   print("")
   print("...")
   print("")
-  commands = {"help" : "shows list of commands"}
+  commands = {"help" : "shows list of commands", "battleship" : "opens the game battleship", "casino" : "opens the casino game"}
 
   command = input("enter command: ").strip().lower()
   
