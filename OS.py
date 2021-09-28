@@ -1,12 +1,16 @@
-from random import randint
+import os
 
-
-#yes
 # imports programs
 import battleship
 import casino
 
 yes_words = ["yes", "y"]
+
+# function for programs and os to use
+def clear():
+  os.system('clear')
+def on_enter():
+  signal = input("'Enter' to continue")
 
 # programs used when logged in
 def os_commands(user):
@@ -20,8 +24,10 @@ def os_commands(user):
   if command == "help":
     print(commands)
   elif command == "battleship":
+    clear()
     battleship.battleship(user)
   elif command == "casino":
+    clear()
     casino.casino(user)
   else:
     print("invalid command")

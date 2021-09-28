@@ -13,6 +13,7 @@ def battleship(user):
     board.append(["O"] * 5)
 
   def print_board(board):
+    OS.clear()
     for i in range(5):
       print(" ".join(board[i]))
 
@@ -35,8 +36,11 @@ def battleship(user):
       print("thats not on the board!")
     elif board[guess_row][guess_col] == "X":
       print("you already guessed there")
+      OS.on_enter()
     else:
+      print("miss!")
       board[guess_row][guess_col] = "X"
+      OS.on_enter()
 
     turns -= 1
   else:

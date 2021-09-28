@@ -20,9 +20,11 @@ def casino(user):
     print("")
     if randint(0, 1) == 1:
       print("you won " + str(amount) + " tokens")
+      OS.on_enter()
       return amount
     else:
       print("you lost " + str(amount) + " tokens")
+      OS.on_enter()
       return -amount
 
 
@@ -40,6 +42,7 @@ def casino(user):
             return amount
     else:
         print("you lost " + str(amount) + " tokens")
+        OS.on_enter()
         return -amount
 
 
@@ -51,6 +54,7 @@ def casino(user):
 
     if randint(0, 2) == 1:
         print("you lost " + str(amount) + " tokens")
+        OS.on_enter()
         return -amount
     else:
         if input("you win! double? ").strip().lower() in OS.yes_words:
@@ -58,6 +62,7 @@ def casino(user):
             return double_or_nothing(amount)
         else:
             print("you won " + str(amount) + " tokens")
+            OS.on_enter()
             return amount
 
 
@@ -83,21 +88,25 @@ def casino(user):
         amount *= 2
         if (pc1 + pc2) > (dp1 + dp2):
             print("you have more! you win!")
+            OS.on_enter()
             return amount
         else:
             print("you have less! you lose!")
+            OS.on_enter()
             return -amount
     else:
         if (pc1 + pc2) > (dp1 + dp2):
             print("you have more! you win!")
+            OS.on_enter()
             return amount
         else:
             print("you have less! you lose!")
+            OS.on_enter()
             return -amount
 
 
   while tokens > 0:
-    print("")
+    OS.clear()
     print("you have " + str(tokens) + " tokens")
     command_casino = input("enter command: ").strip().lower()
 
@@ -119,6 +128,7 @@ def casino(user):
             tokens += bet(amount)
         else:
             print("you dont have enough")
+            OS.on_enter()
 
     # double or nothing
     elif command_casino == "dor":
@@ -127,6 +137,7 @@ def casino(user):
             tokens += double_or_nothing(amount)
         else:
             print("you dont have enough")
+            OS.on_enter()
 
     # scuffed black jack (white jack)
     elif command_casino == "wj":
@@ -138,8 +149,10 @@ def casino(user):
 
     elif command_casino == "leave":
         print("you cant leave :]")
+        OS.on_enter()
     else:
-        print("invalid command_casino")
+        print("invalid command")
+        OS.on_enter()
   else:
     print("no more tokens :(")
     if input("Play again? ").strip().lower() in OS.yes_words:
