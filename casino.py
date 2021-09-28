@@ -6,6 +6,7 @@ def casino(user):
   print("")
   print("...")
   print("")
+  OS.on_enter()
 
   tokens = 100
 
@@ -123,37 +124,56 @@ def casino(user):
 
     # bet
     elif command_casino == "bet":
-        amount = int(input("amount: ").strip())
-        if amount <= tokens:
+        amount = input("amount: ").strip()
+        if amount.isnumeric():
+          amount = int(amount)
+          if amount <= tokens:
             tokens += bet(amount)
-        else:
+          else:
             print("you dont have enough")
             OS.on_enter()
+        else:
+          print("'amount' must be an integer")
+          OS.on_enter()
 
     # double or nothing
     elif command_casino == "dor":
-        amount = int(input("amount: ").strip())
-        if amount <= tokens:
+        amount = input("amount: ").strip()
+        if amount.isnumeric():
+          amount = int(amount)
+          if amount <= tokens:
             tokens += double_or_nothing(amount)
-        else:
+          else:
             print("you dont have enough")
             OS.on_enter()
+        else:
+          print("'amount' must be an integer")
+          OS.on_enter()
 
     # scuffed black jack (white jack)
     elif command_casino == "wj":
-        amount = int(input("amount: ").strip())
-        if amount <= tokens:
+        amount = input("amount: ").strip()
+        if amount.isnumeric:
+          amount = int(amount)
+          if amount <= tokens:
             tokens += white_jack(amount)
-        else:
+          else:
             print("you dont have enough")
+            OS.on_enter()
+        else:
+          print("'amount' must be an integer")
+          OS.on_enter()
 
     elif command_casino == "leave":
         print("you cant leave :]")
         OS.on_enter()
+    elif command_casino == "quit":
+      OS.os_commands(user)
     else:
         print("invalid command")
         OS.on_enter()
   else:
+    OS.clear()
     print("no more tokens :(")
     if input("Play again? ").strip().lower() in OS.yes_words:
       casino(user)
