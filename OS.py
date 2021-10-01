@@ -12,6 +12,12 @@ def clear():
 def on_enter():
   signal = input("'Enter' to continue")
 
+high_scores = {"user1" : {"battleship" : "N/A", "casino" : 0}, "user2" : {"battleship" : "N/A", "casino" : 0}}
+
+def high_score_printer(user):
+  print(user + "'s high scores:")
+  print(high_scores[user])
+
 # programs used when logged in
 def os_commands(user):
   clear()
@@ -21,6 +27,11 @@ def os_commands(user):
   
   if command == "help":
     print(commands)
+    on_enter()
+    os_commands(user)
+  if command == "highscores":
+    clear()
+    high_score_printer(user)
     on_enter()
     os_commands(user)
   elif command == "battleship":
@@ -57,6 +68,7 @@ def login():
   else:
     print("password does not match!")
     on_enter()
+    clear()
     login()
 
 login()

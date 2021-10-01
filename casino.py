@@ -13,7 +13,6 @@ def casino(user):
   print("Welcome to the casino!")
   print("enter 'help' for commands")
 
-
   # 50/50
   def bet(amount):
     print("")
@@ -109,6 +108,9 @@ def casino(user):
   while tokens > 0:
     OS.clear()
     print("you have " + str(tokens) + " tokens")
+    if tokens > OS.high_scores[user]["casino"]:
+      print("new highscore! highscore now is: " + tokens + " tokens!")
+      OS.high_scores[user]["casino"] = tokens
     command_casino = input("enter command: ").strip().lower()
 
     if command_casino == "help":
@@ -153,6 +155,8 @@ def casino(user):
     # scuffed black jack (white jack)
     elif command_casino == "wj":
         amount = input("amount: ").strip()
+        # STILL RETURNS ERROR IF NOTHING ENTERED!
+        # NEED FIXING!
         if amount.isnumeric:
           amount = int(amount)
           if amount <= tokens:
