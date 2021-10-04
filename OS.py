@@ -8,9 +8,17 @@ yes_words = ["yes", "y"]
 
 # function for programs and os to use
 def clear():
-  os.system('clear')
+  clear_type = 'clear'
+  if os.name in ('nt', 'dos'): # changes clear type to work with windows if running
+    clear_type = 'cls'
+  os.system(clear_type)
 def on_enter():
   signal = input("'Enter' to continue")
+
+def logout(user):
+  print("goodbye" + user)
+  on_enter
+  login()
 
 high_scores = {"user1" : {"battleship" : "N/A", "casino" : 0}, "user2" : {"battleship" : "N/A", "casino" : 0}}
 
@@ -48,7 +56,7 @@ def os_commands(user):
 users = {"user1" : "password1", "user2" : "password2"}
 
 def login():
-  clear
+  clear()
   # checks if user exists
   user_login = input("enter user: ")
   if user_login in users:
