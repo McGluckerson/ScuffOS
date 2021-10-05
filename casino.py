@@ -8,7 +8,7 @@ def casino(user):
   print("")
   OS.on_enter()
 
-  tokens = 100
+  OS.info[user]["casino tokens"]
 
   print("Welcome to the casino!")
   print("enter 'help' for commands")
@@ -105,19 +105,18 @@ def casino(user):
             return -amount
 
 
-  while tokens > 0:
+  while OS.info[user]["casino tokens"] > 0:
     OS.clear()
-    print("you have " + str(tokens) + " tokens")
-    if tokens > OS.high_scores[user]["casino"]:
-      print("new highscore! highscore now is: " + tokens + " tokens!")
-      OS.high_scores[user]["casino"] = tokens
+    print("you have " + str(OS.info[user]["casino tokens"]) + " tokens")
+    if OS.info[user]["casino tokens"] > OS.high_scores[user]["casino"]:
+      print("new high score!")
+      OS.high_scores[user]["casino"] = OS.info[user]["casino tokens"]
     command_casino = input("enter command: ").strip().lower()
 
     if command_casino == "help":
         print("")
         print("Commands:")
         print("'bet': 50/50 bet.'")
-        print("'leave'': leaves casino.")
         print(
             "'dor': double or nothing. like bet but you can double your bet. After winning the first bet your chances of winning are 75% instead of 50%"
         )
@@ -129,8 +128,8 @@ def casino(user):
         amount = input("amount: ").strip()
         if amount.isnumeric():
           amount = int(amount)
-          if amount <= tokens:
-            tokens += bet(amount)
+          if amount <= OS.info[user]["casino tokens"]:
+            OS.info[user]["casino tokens"] += bet(amount)
           else:
             print("you dont have enough")
             OS.on_enter()
@@ -143,8 +142,8 @@ def casino(user):
         amount = input("amount: ").strip()
         if amount.isnumeric():
           amount = int(amount)
-          if amount <= tokens:
-            tokens += double_or_nothing(amount)
+          if amount <= OS.info[user]["casino tokens"]:
+            OS.info[user]["casino tokens"] += double_or_nothing(amount)
           else:
             print("you dont have enough")
             OS.on_enter()
@@ -156,11 +155,11 @@ def casino(user):
     elif command_casino == "wj":
         amount = input("amount: ").strip()
         # STILL RETURNS ERROR IF NOTHING ENTERED!
-        # NEED FIXING!
+        # NEEDS FIXING!
         if amount.isnumeric:
           amount = int(amount)
-          if amount <= tokens:
-            tokens += white_jack(amount)
+          if amount <= OS.info[user]["casino tokens"]:
+            OS.info[user]["casino tokens"] += white_jack(amount)
           else:
             print("you dont have enough")
             OS.on_enter()
@@ -168,9 +167,6 @@ def casino(user):
           print("'amount' must be an integer")
           OS.on_enter()
 
-    elif command_casino == "leave":
-        print("you cant leave :]")
-        OS.on_enter()
     elif command_casino == "quit":
       OS.os_commands(user)
     else:
@@ -178,8 +174,9 @@ def casino(user):
         OS.on_enter()
   else:
     OS.clear()
-    print("no more tokens :(")
+    print("no more tokens")
     if input("Play again? ").strip().lower() in OS.yes_words:
+      OS.info[user]["casino tokens"] = 100
       casino(user)
     else:
       OS.os_commands(user)

@@ -26,10 +26,17 @@ def high_score_printer(user):
   print(user + "'s high scores:")
   print(high_scores[user])
 
+info = {"user1": {"casino tokens" : 100, "casino high score": high_scores["user1"]["casino"]}, "user2": {"casino tokens" : 100, "casino high score": high_scores["user2"]["casino"]}}
+
+def user_info(user):
+  print(info[user])
+  on_enter()
+  os_commands(user)
+
 # programs used when logged in
 def os_commands(user):
   clear()
-  commands = {"help" : "shows list of commands", "battleship" : "opens the game battleship", "casino" : "opens the casino game"}
+  commands = {"help" : "shows list of commands", "user info" : "prints user info", "logout" : "logs user out" , "battleship" : "opens the game battleship", "casino" : "opens the casino game"}
 
   command = input("enter command: ").strip().lower()
   
@@ -42,12 +49,17 @@ def os_commands(user):
     high_score_printer(user)
     on_enter()
     os_commands(user)
+  elif command == "user info":
+    user_info(user)
   elif command == "battleship":
     clear()
     battleship.battleship(user)
   elif command == "casino":
     clear()
     casino.casino(user)
+    os_commands(user)
+  elif command == "logout":
+    logout(user)
   else:
     print("invalid command")
     on_enter()
@@ -66,7 +78,7 @@ def login():
     on_enter()
     login()
 
-  # checks if password mathes
+  # checks if password matches
   password_login = input("enter password: ")
   if users[user_login] == password_login:
     print("logging into " + user_login)
