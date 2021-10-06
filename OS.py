@@ -26,7 +26,10 @@ def high_score_printer(user):
   print(user + "'s high scores:")
   print(high_scores[user])
 
-info = {"user1": {"casino tokens" : 100, "casino high score": high_scores["user1"]["casino"]}, "user2": {"casino tokens" : 100, "casino high score": high_scores["user2"]["casino"]}}
+info = {"user1": 
+{"casino" : {"casino tokens" : 100, "casino high score": high_scores["user1"]["casino"]}, 
+"battleship" : {"boards" : {"Pboard" : [], "Cboard" : []}}, 
+"ships" : {"Prow" : 0, "Pcol" : 0, "Crow" : 0, "Ccol" : 0}}}
 
 def user_info(user):
   print(info[user])
