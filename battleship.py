@@ -10,8 +10,8 @@ def battleship(user):
   def setup(user):
     for i in range(5):
       # player attacks player board and cpu attacks cpu board
-      OS.info[user]["battleship"]["boards"]["Pboard"].append(["O"] * 5)
-      OS.info[user]["battleship"]["boards"]["Cboard"].append(["O"] * 5)
+      OS.db["users"][user]["battleship"]["boards"]["Pboard"].append(["O"] * 5)
+      OS.db["users"][user]["battleship"]["boards"]["Cboard"].append(["O"] * 5)
 
   setup(user)
 
@@ -32,7 +32,7 @@ def battleship(user):
     print("your turn")
     OS.on_enter()
 
-    print_board(OS.info[user]["battleship"]["boards"]["Pboard"])
+    print_board(OS.db["users"][user]["battleship"]["boards"]["Pboard"])
 
     guess_row = input("guess row: ").strip()
     guess_col = input("guess col: ").strip()
@@ -48,11 +48,11 @@ def battleship(user):
           battleship(user)
       elif guess_row not in range(0, 5) or guess_col not in range(0, 5):
         print("thats not on the board!")
-      elif OS.info[user]["battleship"]["boards"]["Pboard"][guess_row][guess_col] == "X":
+      elif OS.db["users"][user]["battleship"]["boards"]["Pboard"][guess_row][guess_col] == "X":
         print("you already guessed there")
       else:
         print("miss!")
-        OS.info[user]["battleship"]["boards"]["Pboard"][guess_row][guess_col] = "X"
+        OS.db["users"][user]["battleship"]["boards"]["Pboard"][guess_row][guess_col] = "X"
 
       OS.on_enter()
       OS.clear()
@@ -60,7 +60,7 @@ def battleship(user):
       OS.on_enter()
       OS.clear()
 
-      print_board(OS.info[user]["battleship"]["boards"]["Cboard"])
+      print_board(OS.db["users"][user]["battleship"]["boards"]["Cboard"])
 
       cpu_guess_row = randint(0, 5) - 1
       cpu_guess_col = randint(0, 5) - 1
@@ -71,10 +71,10 @@ def battleship(user):
           battleship(user)
       elif guess_row not in range(0, 5) or guess_col not in range(0,5):
         print("thats not on the board!")
-      elif OS.info[user]["battleship"]["boards"]["Cboard"][cpu_guess_row][cpu_guess_col] == "X":
+      elif OS.db["users"][user]["battleship"]["boards"]["Cboard"][cpu_guess_row][cpu_guess_col] == "X":
         print("you already guessed there")
       else:
         print("miss!")
-        OS.info[user]["battleship"]["boards"]["Cboard"][guess_row][guess_col] = "X"
+        OS.db["users"][user]["battleship"]["boards"]["Cboard"][guess_row][guess_col] = "X"
 
-  print_board(OS.info[user]["battleship"]["boards"]["Pboard"])
+  print_board(OS.db["users"][user]["battleship"]["boards"]["Pboard"])

@@ -1,3 +1,4 @@
+from replit import db
 import os
 
 # imports programs
@@ -20,19 +21,21 @@ def logout(user):
   on_enter
   login()
 
-high_scores = {"user1" : {"battleship" : "N/A", "casino" : 0}, "user2" : {"battleship" : "N/A", "casino" : 0}}
+def add_user(user):
+  new_user = input("user name: ")
+  new_password = input("user password: ")
+  db["users"][new_user] = {"password" : new_password, "casino" : {"casino tokens" : 0, "casino highscore" : 0}, "battleship" : {"boards" : {"Pboard" : [], "Cboard" : []}},  "ships" : {"Prow" : 0, "Pcol" : 0, "Crow" : 0, "Ccol" : 0}}
+  print("user added!")
+  print("user: " + new_user)
+  print("password: " + new_password)
+  on_enter()
+  os_commands(user)
 
 def high_score_printer(user):
   print(user + "'s high scores:")
-  print(high_scores[user])
-
-info = {"user1": 
-{"casino" : {"casino tokens" : 100, "casino high score": high_scores["user1"]["casino"]}, 
-"battleship" : {"boards" : {"Pboard" : [], "Cboard" : []}}, 
-"ships" : {"Prow" : 0, "Pcol" : 0, "Crow" : 0, "Ccol" : 0}}}
 
 def user_info(user):
-  print(info[user])
+  print(db["users"][user])
   on_enter()
   os_commands(user)
 
@@ -61,20 +64,32 @@ def os_commands(user):
     clear()
     casino.casino(user)
     os_commands(user)
+  elif command == "add user":
+    add_user(user)
   elif command == "logout":
     logout(user)
+  elif command == "print user database" and user == "admin":
+    print("there are " + len(db["users"]) + " users!")
+    print(db["users"].keys())
+    on_enter()
+    os_commands(user)
+  elif command == "database":
+    # add database info to print
+    print(len(db))
+    on_enter()
+    os_commands(user)
   else:
     print("invalid command")
     on_enter()
     os_commands(user)
 
-users = {"user1" : "password1", "user2" : "password2"}
+users = {"admin" : "debug", "user2" : "password2"}
 
 def login():
   clear()
   # checks if user exists
   user_login = input("enter user: ")
-  if user_login in users:
+  if user_login in db["users"]:
     print("user found!")
   else:
     print("user does not exist")
@@ -83,8 +98,10 @@ def login():
 
   # checks if password matches
   password_login = input("enter password: ")
-  if users[user_login] == password_login:
+  if db["users"][user_login]["password"] == password_login:
     print("logging into " + user_login)
+    if user_login == "admin":
+      print("bebug tools unlocked")
     on_enter()
     clear()
     os_commands(user_login)
