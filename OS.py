@@ -21,16 +21,6 @@ def logout(user):
   on_enter
   login()
 
-def add_user(user):
-  new_user = input("user name: ")
-  new_password = input("user password: ")
-  db["users"][new_user] = {"password" : new_password, "casino" : {"casino tokens" : 0, "casino highscore" : 0}, "battleship" : {"boards" : {"Pboard" : [], "Cboard" : []}},  "ships" : {"Prow" : 0, "Pcol" : 0, "Crow" : 0, "Ccol" : 0}}
-  print("user added!")
-  print("user: " + new_user)
-  print("password: " + new_password)
-  on_enter()
-  os_commands(user)
-
 def high_score_printer(user):
   print(user + "'s high scores:")
 
@@ -64,8 +54,6 @@ def os_commands(user):
     clear()
     casino.casino(user)
     os_commands(user)
-  elif command == "add user":
-    add_user(user)
   elif command == "logout":
     logout(user)
   elif command == "print user database" and user == "admin":
@@ -101,7 +89,7 @@ def login():
   if db["users"][user_login]["password"] == password_login:
     print("logging into " + user_login)
     if user_login == "admin":
-      print("bebug tools unlocked")
+      print("debug tools unlocked")
     on_enter()
     clear()
     os_commands(user_login)
@@ -111,4 +99,26 @@ def login():
     clear()
     login()
 
-login()
+def add_user():
+  new_user = input("user name: ")
+  new_password = input("user password: ")
+  db["users"][new_user] = {"password" : new_password, "casino" : {"casino tokens" : 0, "casino highscore" : 0}, "battleship" : {"boards" : {"Pboard" : [], "Cboard" : []},  "ships" : {"Pship_row" : 0, "Pship_col" : 0, "Cship_row" : 0, "Cship_col" : 0}}}
+  print("user added!")
+  print("user: " + new_user)
+  print("password: " + new_password)
+  on_enter()
+  clear()
+  start_screen()
+
+def start_screen():
+  print("type 'help' for list of commands")
+  start_command = input("command: ").strip().lower()
+  if start_command == "help":
+    print("'login', 'add user'")
+    start_screen()
+  elif start_command == "login":
+    login()
+  elif start_command == "add user":
+    add_user()
+
+start_screen()
