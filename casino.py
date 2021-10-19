@@ -154,7 +154,7 @@ def casino(user):
         amount = input("amount: ").strip()
         # STILL RETURNS ERROR IF NOTHING ENTERED!
         # NEEDS FIXING!
-        if amount.isnumeric:
+        if amount.isnumeric():
           amount = int(amount)
           if amount <= OS.db["users"][user]["casino"]["casino tokens"]:
             OS.db["users"][user]["casino"]["casino tokens"] += white_jack(amount)
