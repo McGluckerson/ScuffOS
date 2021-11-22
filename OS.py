@@ -132,9 +132,16 @@ def add_user():
   new_user = input("user name: ")
   new_password = input("user password: ")
   db["users"][new_user] = {"password" : new_password, "casino" : {"casino tokens" : 0, "casino highscore" : 0}, "battleship" : {"boards" : {"Pboard" : [], "Cboard" : []},  "ships" : {"Pship_row" : 0, "Pship_col" : 0, "Cship_row" : 0, "Cship_col" : 0}}}
-  print("user added!")
-  print("user: " + new_user)
-  print("password: " + new_password)
+  if input("confirm? ") in yes_words:
+    clear()
+    if new_user not in db["users"]:
+      print("user added!")
+      print("user: " + new_user)
+      print("password: " + new_password)
+    else:
+      print("user already exists ¯\_(ツ)_/¯")
+  else:
+    print("cancelled")
   on_enter()
   clear()
   start_screen()
