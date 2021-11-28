@@ -1,7 +1,7 @@
   # starts the os
 from replit import db
 import os
-if input("update users? ").strip().lower() == "y":
+if input("Starting OS").strip().lower() == "update users":
   for user in db["users"]:
     # update users with new info
     print(user)

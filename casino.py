@@ -102,6 +102,86 @@ def casino(user):
             OS.on_enter()
             return -amount
 
+  def slot_assigner(rng_slots):
+    if rng_slots in range(1, 40):
+      return "+"
+    elif rng_slots in range(41, 80):
+      return "-"
+    elif rng_slots in range(81, 90):
+      return "="
+    elif rng_slots in range (91, 96):
+      return "@"
+    elif rng_slots in range(97, 99):
+      return "x"
+    elif rng_slots in range(100, 100):
+      return "$"
+    else:
+      return "error"
+      print("error 'slot_rng' was " + rng_slots)
+      OS.on_enter()
+
+  def slots():
+    OS.clear()
+    print("")
+    print("...")
+    print("")
+    slot_rng1 = randint(1, 100)
+    slot1 = slot_assigner(slot_rng1)
+    slot_rng2 = randint(1, 100)
+    slot2 = slot_assigner(slot_rng2)
+    slot_rng3 = randint(1, 100)
+    slot3 = slot_assigner(slot_rng3)
+    slot_list = [slot1, slot2, slot3]
+    print(slot_list)
+    numofplus = 0
+    numofmin = 0
+    numofeq = 0
+    numofAt = 0
+    numofX = 0
+    numofCash = 0
+
+    # counts how may times symbols occur
+    for slot in slot_list:
+      if slot == "+":
+        numofplus += 1
+      elif slot == "-":
+        numofmin += 1
+      elif slot == "=":
+        numofeq += 1
+      elif slot == "@":
+        numofAt += 1
+      elif slot == "x":
+        numofX += 1
+      elif slot == "$":
+        numofCash += 1
+
+    # returns reward based on symbols
+    if numofplus == 2:
+      return 1
+    elif numofplus == 3:
+      return 5
+    elif numofmin == 2:
+      return 10
+    elif numofmin == 3:
+      return 20
+    elif numofeq == 2:
+      return 50
+    elif numofeq == 3:
+      return 100
+    elif numofAt == 2:
+      return 200
+    elif numofAt == 3:
+      return 500
+    elif numofX == 2:
+      return 1000
+    elif numofX == 3:
+      return 10000
+    elif numofCash == 2:
+      return 100000
+    elif numofCash == 3:
+      return 1000000
+    else:
+      return 0
 
   while OS.db["users"][user]["casino"]["casino tokens"] > 0:
     OS.clear()
@@ -152,9 +232,7 @@ def casino(user):
     # scuffed black jack (white jack)
     elif command_casino == "wj":
         amount = input("amount: ").strip()
-        # STILL RETURNS ERROR IF NOTHING ENTERED!
-        # NEEDS FIXING!
-        if amount.isnumeric:
+        if amount.isnumeric():
           amount = int(amount)
           if amount <= OS.db["users"][user]["casino"]["casino tokens"]:
             OS.db["users"][user]["casino"]["casino tokens"] += white_jack(amount)
@@ -164,6 +242,21 @@ def casino(user):
         else:
           print("'amount' must be an integer")
           OS.on_enter()
+
+    # slots
+    elif command_casino == "slots":
+      if OS.db["users"][user]["casino"]["casino tokens"] >= 10:
+        if input("'slots' costs 10 tokens. Play slots? ").strip().lower() in OS.yes_words:
+          OS.db["users"][user]["casino"]["casino tokens"] -= 10
+          slot_amount_won = slots()
+          OS.db["users"][user]["casino"]["casino tokens"] += int(slot_amount_won)
+          print("you won " + str(slot_amount_won) + " tokens")
+          OS.on_enter()
+        else:
+          print("cancelled")
+          OS.on_enter()
+      else:
+        print("you need 10 tokens to play")
 
     elif command_casino == "quit":
       OS.os_commands(user)
