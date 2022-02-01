@@ -37,12 +37,12 @@ def search_db(user):
 	key_path = input("Enter key path: ")
 	try:
 		eval(key_path)
-		key_path_valid = true
-	except NameError:
+		key_path_valid = True
+	except:
 		print("key path invalid")
 		on_enter()
 		os_commands(user)
-	if key_path[ -12 :-2 : 1] == "password":
+	if key_path.endswith('["password"]'):
 		print("no XD")
 		on_enter()
 		os_commands(user)
@@ -50,10 +50,8 @@ def search_db(user):
 		clear()
 		if key_path_valid:
 			if type(eval(key_path)) is str:
-				print(str(key_path) + " --> " + (eval("db" + key_path)))
-			else:
-				print("key path not str")
-				print(str(key_path) + " --> " + ((eval("db" + key_path))))
+				print(key_path + ":")
+				print(eval(key_path))
 		on_enter()
 		os_commands(user)
 
