@@ -52,7 +52,7 @@ def search_db(user):
 			if type(eval(key_path)) is str:
 				print(key_path + ":")
 				print(eval(key_path))
-		on_enter()
+				on_enter()
 		os_commands(user)
 
 # programs used when logged in
@@ -105,7 +105,7 @@ def login():
 	else:
 		print("user does not exist")
 		on_enter()
-		login()
+		start_screen()
 
 	# checks if password matches
 	password_login = input("enter password: ")
@@ -123,19 +123,23 @@ def login():
 		login()
 
 def add_user():
+	clear()
 	new_user = input("user name: ")
+	if new_user in ["users"]:
+		print("user already exists ¯\_(ツ)_/¯")
+		on_enter()
+		start_screen()
 	new_password = input("user password: ")
-	db["users"][new_user] = {"password" : new_password, "casino" : {"casino tokens" : 0, "casino highscore" : 0}, "battleship" : {"boards" : {"Pboard" : [], "Cboard" : []},	"ships" : {"Pship_row" : 0, "Pship_col" : 0, "Cship_row" : 0, "Cship_col" : 0}}}
 	if input("confirm? ") in yes_words:
+		db["users"][new_user] = {"password" : new_password, "casino" : {"casino tokens" : 0, "casino highscore" : 0}, "battleship" : {"boards" : {"Pboard" : [], "Cboard" : []},	"ships" : {"Pship_row" : 0, "Pship_col" : 0, "Cship_row" : 0, "Cship_col" : 0}}}
 		clear()
-		if new_user not in db["users"]:
-			print("user added!")
-			print("user: " + new_user)
-			print("password: " + new_password)
-		else:
-			print("user already exists ¯\_(ツ)_/¯")
+		print("user added!")
+		print("user: " + new_user)
+		print("password: " + new_password)
 	else:
 		print("cancelled")
+		on_enter()
+		start_screen()
 	on_enter()
 	clear()
 	start_screen()
