@@ -2,8 +2,9 @@ from replit import db
 import os
 
 # imports programs
-import battleship
-import casino
+from apps import battleship
+from apps import casino
+from apps import maze
 
 yes_words = ["yes", "y"]
 
@@ -58,7 +59,7 @@ def search_db(user):
 # programs used when logged in
 def os_commands(user):
 	clear()
-	commands = {"help" : "shows list of commands", "user info" : "prints user info", "highscores": "shows your highscores", "search database" : "lets the user search the databse including user information", "battleship" : "opens the game battleship", "casino" : "opens the casino game", "logout" : "returns to login"}
+	commands = {"help" : "shows list of commands", "user info" : "prints user info", "highscores": "shows your highscores", "search database" : "lets the user search the databse including user information", "battleship" : "opens the game battleship", "casino" : "opens the casino game", "maze" : "opens maze", "logout" : "returns to login"}
 
 	command = input("enter command: ").strip().lower()
 	
@@ -81,7 +82,9 @@ def os_commands(user):
 	elif command == "casino":
 		clear()
 		casino.casino(user)
-		os_commands(user)
+	elif command == "maze":
+		clear()
+		maze.maze(user)
 	elif command == "logout":
 		start_screen()
 	elif command == "print number of users" and user == "admin":
